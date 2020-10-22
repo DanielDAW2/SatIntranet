@@ -1,0 +1,163 @@
+{% extends 'ordentrabajo/edit.html.twig' %}
+
+{% block title %}Nuevo presupuesto{% endblock %}
+
+{% block content %}
+    <div class="row mb-4">
+        <div class="d-flex col align-items-baseline">
+        {% block ordentrabajo_tipo %}
+             <h1 class="pull-left">Nuevo presupuesto</h1>
+        {% endblock %}
+        </div>     
+    </div>
+
+    {{ include('ordentrabajo/_oow_form.html.twig') }}
+    
+{% endblock %}
+
+
+{% block javascripts %}
+
+{{ parent() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+<script type="text/javascript">
+    document.getElementById("equipo").style.display = "none";
+    document.getElementById("equipo_data").style.display = "none";
+
+    $('#ordentrabajo_tiquet_Cupon').change(function(){
+
+		if(this.checked)
+		{
+			document.getElementById("ordentrabajo_tiquet_numero").disabled = true;
+			document.getElementById("ordentrabajo_tiquet_numero").required = false;
+			document.getElementById("ordentrabajo_tiquet_fecha").disabled = true;
+			document.getElementById("ordentrabajo_tiquet_fecha").required = false;
+			document.getElementById("ordentrabajo_tiquet_numero").value = "";
+			document.getElementById("ordentrabajo_tiquet_fecha").value ="";
+			document.getElementById("ordentrabajo_tiquet_cobrado").disabled = true;
+			document.getElementById("ordentrabajo_tiquet_numero").value = "";
+		}else
+		{
+			document.getElementById("ordentrabajo_tiquet_numero").disabled = false;
+			document.getElementById("ordentrabajo_tiquet_numero").required = true;
+			document.getElementById("ordentrabajo_tiquet_fecha").disabled = false;
+			document.getElementById("ordentrabajo_tiquet_fecha").required = true;
+			document.getElementById("ordentrabajo_tiquet_numero").value = "";
+			document.getElementById("ordentrabajo_tiquet_fecha").value ="";
+			document.getElementById("ordentrabajo_tiquet_cobrado").disabled = false;
+			document.getElementById("ordentrabajo_tiquet_numero").value = "";
+		}
+	})
+	$('#ordentrabajo_tiquet_cobrado').change(function(){
+
+		if(this.checked)
+		{
+			document.getElementById("ordentrabajo_tiquet_numero").disabled = true;
+			document.getElementById("ordentrabajo_tiquet_numero").required = false;
+			document.getElementById("ordentrabajo_tiquet_fecha").disabled = true;
+			document.getElementById("ordentrabajo_tiquet_fecha").required = false;
+			document.getElementById("ordentrabajo_tiquet_Cupon").disabled = true;
+			document.getElementById("ordentrabajo_tiquet_numero").disabled = true;
+			document.getElementById("ordentrabajo_tiquet_numero").value = "";
+			document.getElementById("ordentrabajo_tiquet_fecha").value ="";
+			document.getElementById("ordentrabajo_tiquet_Cupon").value ="";
+		}else
+		{
+			document.getElementById("ordentrabajo_tiquet_numero").disabled = false;
+			document.getElementById("ordentrabajo_tiquet_numero").required = true;
+			document.getElementById("ordentrabajo_tiquet_fecha").disabled = false;
+			document.getElementById("ordentrabajo_tiquet_fecha").required = true;
+			document.getElementById("ordentrabajo_tiquet_Cupon").disabled = false;
+			document.getElementById("ordentrabajo_tiquet_numero").value = "";
+			document.getElementById("ordentrabajo_tiquet_fecha").value ="";
+			document.getElementById("ordentrabajo_tiquet_Cupon").value ="";
+		}
+	})
+	$("input[name='ordentrabajo[equipo][tipo_equipo]']").change(function(){
+		document.getElementById("equipo").style.display = "flex";
+		document.getElementById("equipo_data").style.display = "flex";
+        switch(this.value)
+        {
+            case '6':
+            	
+            	document.getElementById("equipo_color").style.display = "none";
+                document.getElementById("equipo_colorlcd").style.display = "none";
+                document.getElementById("equipo_back").style.display = "none";
+                document.getElementById("equipo_top").style.display = "none";
+                document.getElementById("equipo_tipo_pantalla").style.display = "none";
+                document.getElementById("ordentrabajo_equipo_color").required = false;
+                document.getElementById("ordentrabajo_equipo_color_lcd").required = false;
+                document.getElementById("ordentrabajo_equipo_back_cover").required = false;
+                document.getElementById("ordentrabajo_equipo_top_cover").required = false;
+                break;
+            case '7':
+            	document.querySelector("#equipo_colorlcd > div > label").innerHTML = "Color Bezel";
+            	document.querySelector("#equipo_top > div > label").innerHTML = "Color Top Cover"
+        		document.querySelector("#equipo_back > div > label").innerHTML = "Color Back";
+                document.getElementById("equipo_color").style.display = "block";
+                document.getElementById("ordentrabajo_equipo_color").required = false;
+                document.getElementById("equipo_colorlcd").style.display = "block";
+                document.getElementById("ordentrabajo_equipo_color_lcd").required = false;
+                document.getElementById("equipo_back").style.display = "block";
+                document.getElementById("ordentrabajo_equipo_back_cover").required = false;
+                document.getElementById("equipo_top").style.display = "block";
+                document.getElementById("ordentrabajo_equipo_top_cover").required = false;
+                document.getElementById("equipo_tipo_pantalla").style.display = "block";
+                break;
+            case '8':
+            	document.getElementById("equipo_color").style.display = "none";
+                document.getElementById("equipo_colorlcd").style.display = "none";
+                document.getElementById("equipo_back").style.display = "none";
+                document.getElementById("equipo_top").style.display = "none";
+                document.getElementById("equipo_tipo_pantalla").style.display = "none";
+                document.getElementById("ordentrabajo_equipo_color").required = false;
+                document.getElementById("ordentrabajo_equipo_color_lcd").required = false;
+                document.getElementById("ordentrabajo_equipo_back_cover").required = false;
+                document.getElementById("ordentrabajo_equipo_top_cover").required = false;
+                
+                break;
+            case '9':
+            	document.querySelector("#equipo_back > div > label").innerHTML = "Color Tapa Trasera";
+            	document.querySelector("#equipo_colorlcd > div > label").innerHTML = "Color LCD";
+            	document.querySelector("#equipo_top > div > label").innerHTML = "Color Marco"
+            	document.getElementById("equipo_color").style.display = "none";
+                document.getElementById("equipo_colorlcd").style.display = "block";
+                document.getElementById("equipo_back").style.display = "block";
+                document.getElementById("equipo_top").style.display = "block";
+                document.getElementById("equipo_tipo_pantalla").style.display = "none";
+                document.getElementById("ordentrabajo_equipo_top_cover").required = true;
+                document.getElementById("ordentrabajo_equipo_color").required = false;
+                document.getElementById("ordentrabajo_equipo_color_lcd").required = true;
+                document.getElementById("ordentrabajo_equipo_back_cover").required = true;
+                break;
+            case '10':
+            	document.getElementById("equipo_color").style.display = "none";
+                document.getElementById("equipo_colorlcd").style.display = "block";
+                document.getElementById("equipo_back").style.display = "block";
+                document.getElementById("equipo_top").style.display = "none";
+                document.getElementById("equipo_tipo_pantalla").style.display = "none";
+                document.getElementById("ordentrabajo_equipo_color").required = false;
+                document.getElementById("ordentrabajo_equipo_color_lcd").required = false;
+                document.getElementById("ordentrabajo_equipo_back_cover").required = false;
+                document.getElementById("ordentrabajo_equipo_top_cover").required = false;
+                break;
+            case '11':
+            	
+            	document.querySelector("#equipo_back > div > label").innerHTML = "Tapa Trasera";
+            	document.querySelector("#equipo_color").style.display = "none";
+            	document.querySelector("#equipo_colorlcd > div > label").innerHTML = "Color LCD";
+                document.getElementById("equipo_colorlcd").style.display = "block";
+                document.getElementById("equipo_back").style.display = "block";
+                document.getElementById("equipo_top").style.display = "none";
+                document.getElementById("ordentrabajo_equipo_color").required = false;
+                document.getElementById("ordentrabajo_equipo_color_lcd").required = false;
+                document.getElementById("ordentrabajo_equipo_back_cover").required = true;
+                document.getElementById("ordentrabajo_equipo_top_cover").required = false;
+                break;
+        }
+      
+	})
+</script>
+
+
+{% endblock %}

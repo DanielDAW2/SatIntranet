@@ -1,0 +1,30 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}TiquetFactura{% endblock %}
+
+{% block content %}
+    <h1>TiquetFactura</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tiquet_factura.id }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ tiquet_factura.numero }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ tiquet_factura.fecha ? tiquet_factura.fecha|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('tiquet_factura_index') }}">back to list</a>
+
+    <a href="{{ path('tiquet_factura_edit', {'id': tiquet_factura.id}) }}">edit</a>
+
+    {{ include('tiquet_factura/_delete_form.html.twig') }}
+{% endblock %}

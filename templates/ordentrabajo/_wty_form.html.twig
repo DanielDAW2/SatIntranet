@@ -1,0 +1,77 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-6">
+                {{ form_row(form.n_caso) }}
+        </div>
+        <div class="col-md-6">
+        {% if is_granted("ROLE_CENTRAL") %}
+                {{ form_row(form.situacion) }}
+            {% else %}
+            	{{ form_row(form.situacion,{"attr":{"disabled":true}}) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+                {{form_row(form.n_orden)}}
+        </div>
+        <div class="col">
+            {{ form_row(form.prioridad,{"attr":{"disabled":true}}) }}
+        </div>
+        <div class="col">
+            <label for="ordentrabajo_fecha_entrada_date">Fecha Entrada</label>
+            {{ form_widget(form.fecha_entrada,{"attr":{"disabled":true}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.indicaciones_cliente) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.averias_detectadas) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.usuarios) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.TrabajosaRealizar) }}
+        </div>
+    </div>
+    <h1>Equipo a reparar</h1>
+     <div class="row" id="equipo_data">
+		<div class="col">
+            {{ form_row(form.equipo.n_serie,{"required":"true"}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.equipo.partnumber,{"required":"true"}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.equipo.marca,{"required":"true"}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.equipo.Modelo,{"required":"true"}) }}
+        </div>  
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.equipo.fechaCompraEquipo,{"required":"true"}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.equipo.tiquet,{"required":"true","label":"Tiquet Compra Equipo"}) }}
+        </div>  
+    </div>
+    <div class="row">
+            <div class="col">
+                {{ form_row(form.observaciones) }}
+            </div>
+        </div>
+	    {{ form_row(form.accesorios,{"label":"Accesorios que se dejan en clinica"}) }}
+		<button class="btn btn-primary" type="submit">Enviar datos y pasar a adjuntar imagenes</button>
+    </div>
+      
+    
+    
+
+{{ form_end(form) }}

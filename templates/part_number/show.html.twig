@@ -1,0 +1,26 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}PartNumber{% endblock %}
+
+{% block content %}
+    <h1>PartNumber</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ part_number.id }}</td>
+            </tr>
+            <tr>
+                <th>Partnumber</th>
+                <td>{{ part_number.partnumber }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('part_number_index') }}">back to list</a>
+
+    <a href="{{ path('part_number_edit', {'id': part_number.id}) }}">edit</a>
+
+    {{ include('part_number/_delete_form.html.twig') }}
+{% endblock %}

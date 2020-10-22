@@ -1,0 +1,37 @@
+{{ form_start(form) }}
+    <div class="row">
+		<div class="col">
+            {{ form_row(form.n_serie,{"required":"false"}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.partnumber,{"required":"false"}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.marca,{"required":"false"}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.Modelo,{"required":"false"}) }}
+        </div>  
+    </div>
+    <div class="row">
+            
+            <div class="col">
+                {{ form_row(form.color,{"required":"false"}) }}
+            </div>
+            <div class="col">
+            	{{ form_row(form.color_lcd,{"required":"false"}) }}
+            </div>
+            <div class="col">
+            	{{ form_row(form.back_cover,{"required":"false"}) }}
+            </div> 
+            <div class="col">
+            	{{ form_row(form.top_cover,{"required":"false"}) }}
+            </div> 
+            <div>
+                {{form_row(form.FechaCompraEquipo,{"required":"false"})}}
+            </div>
+            
+        </div>
+        {{ form_row(form.observaciones) }}
+        <button class="btn btn-primary" type="submit">Guardar</button>
+{{ form_end(form) }}

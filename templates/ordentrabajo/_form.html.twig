@@ -1,0 +1,118 @@
+{{ form_start(form) }}
+	<div class="row">
+		<div class="col">
+			<div class="row">
+    			<div class="col">
+    			{{ form_row(form.tiquet.numero,{"required":false}) }}
+    			</div>
+    			<div class="col">
+    			{{ form_row(form.tiquet.fecha,{"required":false}) }}
+    			</div>
+    			<div class="col">
+    			{{ form_row(form.tiquet.Cupon,{"label":"Cheque Diagnostico (sin tiquet)"}) }}
+    			{{ form_row(form.tiquet.cobrado,{"label":"Tiquet NO Cobrado"}) }}
+    			</div>
+			</div>
+		</div>
+	</div>
+    <div class="row">
+        <div class="col-md-6">
+                {{ form_row(form.n_caso) }}
+                
+        </div>
+        <div class="col-md-6">
+        {% if is_granted("ROLE_CENTRAL") %}
+                {{ form_row(form.situacion) }}
+            {% else %}
+            	{{ form_row(form.situacion,{"attr":{"disabled":"disabled"}}) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+                {{form_row(form.n_orden)}}
+        </div>
+        <div class="col">
+            {% if is_granted("ROLE_CENTRAL") %}
+                {{ form_row(form.prioridad) }}
+            {% else %}
+            	{{ form_row(form.prioridad,{"attr":{"disabled":"disabled"}}) }}
+            {% endif %}
+        </div>
+        <div class="col">
+            <label for="ordentrabajo_fecha_entrada_date">Fecha Entrada</label>
+            {{ form_widget(form.fecha_entrada) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.indicaciones_cliente) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.averias_detectadas) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.usuarios) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.TrabajosaRealizar) }}
+        </div>
+    </div>
+    <div class="row">
+            <div class="col">
+                {{ form_row(form.observaciones) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.observaciones_int) }}
+            </div>
+        </div>
+    <h1>Equipo a reparar</h1>
+    {{ form_row(form.equipo.tipo_equipo,{"required":false}) }}
+     <div class="row">
+		<div class="col">
+            {{ form_row(form.equipo.n_serie,{"required":false}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.equipo.partnumber,{"required":false}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.equipo.marca,{"required":false}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.equipo.Modelo,{"required":false}) }}
+        </div>  
+    </div>
+    <div class="row">
+            
+            <div class="col">
+                {{ form_row(form.equipo.color,{"required":false}) }}
+            </div>
+            <div class="col">
+            	{{ form_row(form.equipo.color_lcd,{"required":false}) }}
+            </div>
+            <div class="col">
+            	{{ form_row(form.equipo.back_cover,{"required":false}) }}
+            </div> 
+            <div class="col">
+            	{{ form_row(form.equipo.top_cover,{"required":false}) }}
+            </div> 
+            <div>
+                {{form_row(form.equipo.fechaCompraEquipo,{"required":false})}}
+            </div>
+            
+        </div>
+   		<div class="row">
+   			<div class="col">{{form_row(form.equipo.tiquet,{"required":false})}}</div>
+   			<div class="col">{{form_row(form.equipo.tipo_pantalla,{"required":false})}}</div>
+   		</div>
+   		<div class="row">
+   			<div class="col">{{form_row(form.accesorios,{"required":false})}}</div>
+   		</div>
+        {{ form_row(form.equipo.observaciones,{"label":"Observaciones sobre el Equipo a reparar"}) }}
+    <div class="row">
+
+        </div>
+        <a href="{{ path("ordentrabajo_index") }}" class="btn btn-primary">Salir</a>
+{{ form_end(form) }}

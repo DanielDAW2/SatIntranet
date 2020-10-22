@@ -1,0 +1,42 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Servicios{% endblock %}
+
+{% block content %}
+    <h1>Servicios</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ servicio.id }}</td>
+            </tr>
+            <tr>
+                <th>FechaAlta</th>
+                <td>{{ servicio.fechaAlta ? servicio.fechaAlta|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaFin</th>
+                <td>{{ servicio.fechaFin ? servicio.fechaFin|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaBaja</th>
+                <td>{{ servicio.fechaBaja ? servicio.fechaBaja|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>FechaRenovacion</th>
+                <td>{{ servicio.fechaRenovacion ? servicio.fechaRenovacion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CodigoPromo</th>
+                <td>{{ servicio.codigoPromo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('servicios_index',{'tipo':servicio.tipo.slug}) }}">back to list</a>
+
+    <a href="{{ path('servicios_edit', {'tipo':servicio.tipo.slug,'id': servicio.id}) }}">edit</a>
+
+    {{ include('servicios/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,5 @@
+{% for data in datas %}
+	 <li class="dropdown-item">
+	 	<a href="{{ path("ordentrabajo_index",{delegacion:data.id}|merge(app.request.attributes)) }}">{{ data.nombre }}</a>
+	</li>
+{% endfor %}

@@ -1,0 +1,11 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}New PartNumber{% endblock %}
+
+{% block content %}
+    <h1>Create new PartNumber</h1>
+
+    {{ include('part_number/_form.html.twig') }}
+
+    <a href="{{ path('part_number_index') }}">back to list</a>
+{% endblock %}

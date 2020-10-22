@@ -1,0 +1,104 @@
+{{ form_start(form) }}
+	<div class="row">
+		<div class="col">
+			<div class="row">
+    			<div class="col">
+    			{{ form_row(form.tiquet.numero) }}
+    			</div>
+    			<div class="col">
+    			{{ form_row(form.tiquet.fecha) }}
+    			</div>
+    			<div class="col">
+    			{{ form_row(form.tiquet.Cupon,{"label":"Cheque Diagnostico (sin tiquet)"}) }}
+    			{{ form_row(form.tiquet.cobrado,{"label":"Tiquet NO cobrado"}) }}
+    			</div>
+			</div>
+		</div>
+	</div>
+    <div class="row">
+        <div class="col-md-6">
+                {{ form_row(form.n_caso) }}
+        </div>
+        <div class="col-md-6">
+        {% if is_granted("ROLE_CENTRAL") %}
+                {{ form_row(form.situacion,{"attr":{"disabled":true}}) }}
+            {% else %}
+            	{{ form_row(form.situacion,{"attr":{"disabled":true}}) }}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+                {{form_row(form.n_orden)}}
+        </div>
+        <div class="col">
+            {{ form_row(form.prioridad,{"attr":{"disabled":true}}) }}
+        </div>
+        <div class="col">
+            <label for="ordentrabajo_fecha_entrada_date">Fecha Entrada</label>
+            {{ form_widget(form.fecha_entrada,{"attr":{"disabled":true}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.indicaciones_cliente) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.averias_detectadas) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.usuarios) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.TrabajosaRealizar) }}
+        </div>
+    </div>
+    <div class="row">
+            <div class="col">
+                {{ form_row(form.observaciones) }}
+            </div>
+        </div>
+    <h1>Equipo a reparar</h1>
+    {{ form_row(form.equipo.tipo_equipo) }}
+     <div class="row" id="equipo_data">
+		<div class="col">
+            {{ form_row(form.equipo.n_serie,{"required":"true"}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.equipo.partnumber,{"required":"true"}) }}
+        </div>
+        <div class="col">
+        	{{ form_row(form.equipo.marca,{"required":true}) }}
+            
+        </div>
+        <div class="col">
+            {{ form_row(form.equipo.Modelo,{"required":true}) }}
+        </div>  
+    </div>
+    <div class="row" id="equipo">
+        <div class="col" id="equipo_color">
+            {{ form_row(form.equipo.color,{"required":"false"}) }}
+        </div>
+        <div class="col" id="equipo_colorlcd">
+        	{{ form_row(form.equipo.color_lcd,{"required":"false","label":"LCD / Bezel"}) }}
+        </div>
+        <div class="col" id="equipo_back">
+        	{{ form_row(form.equipo.back_cover,{"required":"false"}) }}
+        </div> 
+        <div class="col" id="equipo_top">
+        	{{ form_row(form.equipo.top_cover,{"required":"false"}) }}
+        </div>
+        <div class="col" id="equipo_tipo_pantalla">
+        	{{ form_row(form.equipo.tipo_pantalla,{"required":"false"}) }}
+        </div> 
+
+    </div>
+        {{ form_row(form.equipo.observaciones,{"label":"Observaciones sobre el Equipo a reparar"}) }}
+        
+    
+    {{ form_row(form.accesorios,{"label":"Accesorios que se dejan en clinica"}) }}
+<button class="btn btn-primary" type="submit">Enviar datos y pasar a adjuntar imagenes</button>
+
+{{ form_end(form) }}

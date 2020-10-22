@@ -1,0 +1,37 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}NotasServicios index{% endblock %}
+
+{% block content %}
+    <h1>NotasServicios index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Nota</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for notas_servicio in notas_servicios %}
+            <tr>
+                <td>{{ notas_servicio.id }}</td>
+                <td>{{ notas_servicio.fecha ? notas_servicio.fecha|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ notas_servicio.Nota }}</td>
+                <td>
+                    <a href="{{ path('notas_servicios_show', {'id': notas_servicio.id}) }}">show</a>
+                    <a href="{{ path('notas_servicios_edit', {'id': notas_servicio.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('notas_servicios_new') }}">Create new</a>
+{% endblock %}

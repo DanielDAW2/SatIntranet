@@ -1,0 +1,11 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Nueva Delegacion{% endblock %}
+
+{% block content %}
+    <h1>Create new Delegacion</h1>
+
+    {{ include('delegacion/_form.html.twig') }}
+
+    <a href="{{ path('delegacion_index') }}">back to list</a>
+{% endblock %}

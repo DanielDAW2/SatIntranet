@@ -1,0 +1,11 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}New TiquetFactura{% endblock %}
+
+{% block content %}
+    <h1>Create new TiquetFactura</h1>
+
+    {{ include('tiquet_factura/_form.html.twig') }}
+
+    <a href="{{ path('tiquet_factura_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Modelo index{% endblock %}
+
+{% block content %}
+    <h1>Modelo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Id Externo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for modelo in modelos %}
+            <tr>
+                <td>{{ modelo.nombre }}</td>
+                <td>{{ modelo.idTR }}</td>
+                <td>
+                    <a href="{{ path('modelo_show', {'id': modelo.id}) }}">show</a>
+                    <a href="{{ path('modelo_edit', {'id': modelo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No se han encontrado Modelos.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('modelo_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}New EstadosClinica{% endblock %}
+
+{% block content %}
+    <h1>Create new EstadosClinica</h1>
+
+    {{ include('estados_clinica/_form.html.twig') }}
+
+    <a href="{{ path('estados_clinica_index') }}">back to list</a>
+{% endblock %}

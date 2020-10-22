@@ -1,0 +1,81 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Ordentrabajo{% endblock %}
+
+{% block content %}
+    <h1>Orden {{ordentrabajo.ncaso}}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nº Orden Central</th>
+                <td>{{ ordentrabajo.norden }}</td>
+            </tr>
+            <tr>
+                <th>Delegación</th>
+                <td>{{ ordentrabajo.delegacion.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Tipo</th>
+                <td>{{ ordentrabajo.tipo.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Situación</th>
+                <td>{{ ordentrabajo.situacion.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Fecha Entrada</th>
+                <td>{{ ordentrabajo.fechaEntrada ? ordentrabajo.fechaEntrada|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fecha Salida</th>
+                <td>{{ ordentrabajo.fechaSalida ? ordentrabajo.fechaSalida|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fecha Fin</th>
+                <td>{{ ordentrabajo.fechaFin ? ordentrabajo.fechaFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Indicaciones Cliente</th>
+                <td>{{ ordentrabajo.indicacionesCliente }}</td>
+            </tr>
+            <tr>
+                <th>Averias Detectadas</th>
+                <td>{{ ordentrabajo.averiasDetectadas }}</td>
+            </tr>
+            <tr>
+                <th>Trabajos a realizar</th>
+                <td>{{ ordentrabajo.trabajosarealizar }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ ordentrabajo.observaciones }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones Internas</th>
+                <td>{{ ordentrabajo.observacionesInt }}</td>
+            </tr>
+            
+            <tr>
+                <th>Operarios</th>
+                <td>
+                    {% for usuario in ordentrabajo.usuarios %}
+                        {{ usuario.nombre}}
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>       
+    {% if ordentrabajo.materiales %}
+        <h1>Materiales Presupestados</h1>
+        <table class="table">
+            {% for material in ordentrabajo.materiales %}
+                <tr>
+                    <th>Articulo</th>
+                    <td>{{material.nombre}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+{% endblock %}

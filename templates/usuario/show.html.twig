@@ -1,0 +1,27 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Usuario{% endblock %}
+
+{% block content %}
+    <h1>Usuario</h1>
+
+    <table class="table">
+            <tr>
+                <th>Nombre de usuario</th>
+                <td>{{ usuario.username }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ usuario.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellidos</th>
+                <td>{{ usuario.apellidos }}</td>
+            </tr>
+            <tr>
+                <th>Delegacion</th>
+                <td>{{ usuario.delegacion.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

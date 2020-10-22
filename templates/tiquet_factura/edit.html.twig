@@ -1,0 +1,13 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Edit TiquetFactura{% endblock %}
+
+{% block content %}
+    <h1>Edit TiquetFactura</h1>
+
+    {{ include('tiquet_factura/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('tiquet_factura_index') }}">back to list</a>
+
+    {{ include('tiquet_factura/_delete_form.html.twig') }}
+{% endblock %}

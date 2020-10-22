@@ -1,0 +1,43 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}CierreReparaciones index{% endblock %}
+
+{% block content %}
+    <h1>Cambios de situación</h1>
+    {% if ot is defined %}
+	<a href="{{ path("ordentrabajo_edit",{"n_orden":ot}) }}">Volver a la orden</a>
+	{% endif %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>NOrden</th>
+                <th>Tiquet Cierre</th>
+                <th>Fecha</th>
+                <th>Comentario</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cierre_reparacione in cierre_reparaciones %}
+            <tr>
+                <td>{{ cierre_reparacione.usuario.nombre }} {{ cierre_reparacione.usuario.apellidos }}</td>
+                <td>{{ cierre_reparacione.NOrden }}</td>
+                <td>{% if cierre_reparacione.TiquetCierre %} {{ cierre_reparacione.TiquetCierre.numero }} {{ cierre_reparacione.TiquetCierre.fecha|date("d/m/y") }} {% else %} Sín Tiquet {% endif %}</td>
+                <td>{{ cierre_reparacione.fecha ? cierre_reparacione.fecha|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ cierre_reparacione.comentario }}</td>
+                <td>
+                    <a href="{{ path('cierre_reparaciones_show', {'id': cierre_reparacione.id}) }}">show</a>
+                    <a href="{{ path('cierre_reparaciones_edit', {'id': cierre_reparacione.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Sin Cambios</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('cierre_reparaciones_new') }}">Create new</a>
+{% endblock %}

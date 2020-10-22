@@ -1,0 +1,38 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Equipo{% endblock %}
+
+{% block content %}
+    <h1>Equipo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ equipo.id }}</td>
+            </tr>
+            <tr>
+                <th>Accesorios</th>
+                <td>{{ equipo.accesorios }}</td>
+            </tr>
+            <tr>
+                <th>FechaCompraEquipo</th>
+                <td>{{ equipo.fechaCompraEquipo ? equipo.fechaCompraEquipo|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>N_serie</th>
+                <td>{{ equipo.nSerie }}</td>
+            </tr>
+            <tr>
+                <th>Color</th>
+                <td>{{ equipo.color }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('equipo_index') }}">back to list</a>
+
+    <a href="{{ path('equipo_edit', {'id': equipo.id}) }}">edit</a>
+
+    {{ include('equipo/_delete_form.html.twig') }}
+{% endblock %}

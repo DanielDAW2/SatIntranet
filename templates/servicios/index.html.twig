@@ -1,0 +1,48 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Servicios index{% endblock %}
+
+{% block content %}
+    <h1>Servicios index</h1>
+    
+	<a href="{{ path("servicios_solicitar",{"tipo":tipo}) }}" class="btn btn-success">Solicitar Código</a>
+	<p>Los códigos solicitados se añadirán a la lista al recargar la página</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Solicitante</th>
+                <th>Clinica</th>
+                <th>Tipo</th>
+                <th>FechaAlta</th>
+                <th>FechaFin</th>
+                <th>FechaBaja</th>
+                <th>FechaRenovacion</th>
+                <th>CodigoPromo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for servicio in servicios %}
+            <tr>
+                <td>{% if servicio.solicitante %}{{ servicio.solicitante.nombre }} {{ servicio.solicitante.apellidos }}{% else %} Disponible {% endif %}</td>
+                <td>{% if servicio.solicitante.delegacion is defined %}{{ servicio.solicitante.delegacion.nombre }}{% endif %}</td>
+                <td>{{ servicio.tipo.nombre }}</td>
+                <td>{{ servicio.fechaAlta ? servicio.fechaAlta|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ servicio.fechaFin ? servicio.fechaFin|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ servicio.fechaBaja ? servicio.fechaBaja|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ servicio.fechaRenovacion ? servicio.fechaRenovacion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ servicio.codigoPromo }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('servicios_show', {'tipo': servicio.tipo.slug, 'id' : servicio.id}) }}">Ver</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no se han solicitado códigos</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('servicios_new',{"tipo":tipo}) }}">Create new</a>
+{% endblock %}

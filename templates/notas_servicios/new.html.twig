@@ -1,0 +1,11 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}New NotasServicios{% endblock %}
+
+{% block content %}
+    <h1>Create new NotasServicios</h1>
+
+    {{ include('notas_servicios/_form.html.twig') }}
+
+    <a href="{{ path('notas_servicios_index') }}">back to list</a>
+{% endblock %}

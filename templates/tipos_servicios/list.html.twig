@@ -1,0 +1,5 @@
+{% for service in services %}
+    <li>
+    	 <a href="{{ path("servicios_index",{"tipo":service.slug}) }}">{{ service.nombre }}</a>
+    </li>
+{% endfor %}

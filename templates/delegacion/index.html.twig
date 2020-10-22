@@ -1,0 +1,45 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Delegaciones{% endblock %}
+
+{% block content %}
+    <h1>Delegaciones</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Codigopostal</th>
+                <th>Telefono</th>
+                <th>Contacto</th>
+                <th>Email</th>
+                <th>IdTr</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for delegacion in delegacions %}
+            <tr>
+                <td>{{ delegacion.nombre }}</td>
+                <td>{{ delegacion.direccion }}</td>
+                <td>{{ delegacion.codigopostal }}</td>
+                <td>{{ delegacion.telefono }}</td>
+                <td>{{ delegacion.contacto }}</td>
+                <td>{{ delegacion.email }}</td>
+                <td>{{ delegacion.idTr }}</td>
+                <td>
+                    <a href="{{ path('delegacion_show', {'id': delegacion.id}) }}">show</a>
+                    <a href="{{ path('delegacion_edit', {'id': delegacion.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('delegacion_new') }}">Create new</a>
+{% endblock %}

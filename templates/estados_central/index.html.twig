@@ -1,0 +1,35 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}EstadosCentral index{% endblock %}
+
+{% block content %}
+    <h1>EstadosCentral index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for estados_central in estados_centrals %}
+            <tr>
+                <td>{{ estados_central.id }}</td>
+                <td>{{ estados_central.nombre }}</td>
+                <td>
+                    <a href="{{ path('estados_central_show', {'id': estados_central.id}) }}">show</a>
+                    <a href="{{ path('estados_central_edit', {'id': estados_central.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('estados_central_new') }}">Create new</a>
+{% endblock %}

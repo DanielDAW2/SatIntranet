@@ -1,0 +1,37 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}TiposServicios index{% endblock %}
+
+{% block content %}
+    <h1>TiposServicios index</h1>
+	<a href="{{ path("servicios_import") }}">Importar códigos</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Slug</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tipos_servicio in tipos_servicios %}
+            <tr>
+                <td>{{ tipos_servicio.id }}</td>
+                <td>{{ tipos_servicio.nombre }}</td>
+                <td>{{ tipos_servicio.slug }}</td>
+                <td>
+                    <a href="{{ path('tipos_servicios_show', {'id': tipos_servicio.id}) }}">show</a>
+                    <a href="{{ path('tipos_servicios_edit', {'id': tipos_servicio.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('tipos_servicios_new') }}">Create new</a>
+{% endblock %}

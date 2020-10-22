@@ -1,0 +1,38 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}ConfCierreReparacion index{% endblock %}
+
+{% block content %}
+    <h1>Configuración de situaciones en cierre de reparaciones</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Situacion Origen</th>
+                <th>Situacion Destino</th>
+                <th>Usar por defecto en duplicado</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for conf_cierre_reparacion in conf_cierre_reparacions %}
+            <tr>
+                <td>{{ conf_cierre_reparacion.id }}</td>
+                <td>{{ conf_cierre_reparacion.SituacionOrigen.nombre }}</td>
+                <td>{{ conf_cierre_reparacion.SituacionFinal.nombre }}</td>
+                <td>{{ conf_cierre_reparacion.pordefecto ? "Si" : "No" }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('conf_cierre_reparacion_edit', {'id': conf_cierre_reparacion.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('conf_cierre_reparacion_new') }}">Create new</a>
+{% endblock %}

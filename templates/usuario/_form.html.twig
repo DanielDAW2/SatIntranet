@@ -1,0 +1,12 @@
+{{ form_start(form) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.nombre) }}
+    {{ form_row(form.apellidos) }}
+    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_CENTRAL") %}
+        {{ form_row(form.delegacion) }}
+        {{ form_row(form.isactive) }}
+        {{ form_row(form.plainPassword) }}
+        {{ form_row(form.roles) }}
+    {% endif %}
+    <button class="btn">{{ button_label|default('Guardar') }}</button>
+{{ form_end(form) }}

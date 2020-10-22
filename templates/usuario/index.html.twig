@@ -1,0 +1,46 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Usuarios SAT Techfore{% endblock %}
+
+{% block content %}
+    <h1>Usuarios</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Roles</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Delegacion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.username }}</td>
+                <td>
+                    {% for role in usuario.roles %}
+                        {{ role }}
+                    {% endfor %}
+                    
+                </td>
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.apellidos }}</td>
+                <td>{{ usuario.delegacion.nombre }}</td>
+                <td>
+                    <a href="{{ path('usuario_show', {'id': usuario.id}) }}">show</a>
+                    <a href="{{ path('usuario_edit', {'id': usuario.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_register') }}">Create new</a>
+{% endblock %}

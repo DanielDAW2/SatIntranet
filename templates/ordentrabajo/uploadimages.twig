@@ -1,0 +1,276 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Ordentrabajo index{% endblock %}
+{% block stylesheets %}
+{{parent()}}
+    <link rel="stylesheet" href="{{ asset('assets/css/dropzone.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/modal.css') }}">
+{% endblock stylesheets %}
+{% block content %}
+<h1>{{ ordentrabajo.tipo.nombre }}: {{ ordentrabajo.norden }} / {{ ordentrabajo.ncaso }}</h1>
+<h3>Envia los adjuntos para completar la orden</h3>
+	<p><h3>Las imagenes deben contener:</h3></p>
+		<ul>
+		{% if ordentrabajo.tipo.id == 5 %}
+			<li>El número de serie, Product Number y modelo.</li>
+			<li>Hoja Técnica Garantía HP</li>
+			<li>Ticket de compra</li>
+			<li>Código de error de test HP (Solo en garántias)</li>
+		{% else %}
+			<li>El número de serie, Product Number y modelo.</li>
+			<li>Piezas a solicitar (si es posible)</li>
+		{% endif %}
+		</ul>
+	<em>En caso de faltar algunos de los datos listados arriba nos pondremos en contacto.</em>
+    
+
+    <div class="col">
+    {% if ordentrabajo.tipo.id == 5 %}
+    	<h3>Adjunto Product Number,  Número de serie y modelo</h3>
+        <div id="imagen_detalles" class="dropzone mt-4"></div>
+    	<h3>Adjuntos Hoja Técnica</h3>
+        <div id="imagen_HojaTecnica" class="dropzone mt-4"></div>
+        <h3>Adjunto Tiquet de compra equipo</h3>
+        <div id="imagen_tiquet" class="dropzone mt-4"></div>
+        <h3>Adjunto Error Test HP</h3>
+        <div id="imagen_errorHP" class="dropzone mt-4"></div>
+        
+        {% else %}
+        <h3>Adjunto Product Number,  Numero de serie y modelo</h3>
+        <div id="imagen_detalles" class="dropzone mt-4"></div>
+        {% endif %}
+        <button class="btn btn-primary" onclick="handleOnClick()">Verificar adjuntos y salir</button>
+    </div>
+	
+{% endblock %}
+    
+     {% block modal_portal %}
+     <div class="modal_container">
+ 		<button onclick="handleClose()" class="btn modal_close px-4">X</button>
+     	<div class="p-4 row">
+     		<div class="col">
+     		<h3 id="modal__title">Faltan estos adjuntos para completar la orden:</h3>
+     		<ul id="modal_data">
+     			
+     		</ul>
+     		<a href="{{ path("ordentrabajo_edit",{"n_orden":ordentrabajo.norden }) }}" class="btn btn-warning">Volver a la orden</a> <button onclick="handleClose()" class="btn btn-primary">Adjuntar archivos</button>
+     		</div>
+     	</div>
+     </div>
+     {% endblock %}
+{% block javascripts %}
+{{parent()}}
+<script src="{{asset("assets/js/dropzone.min.js")}}"></script>
+<script type="text/javascript">
+	
+	const form = [];
+		function getData()
+		{
+			xhttp = new XMLHttpRequest();
+	    	xhttp.open("GET","{{ path("ordentrabajo_getuploadedimages",{"n_orden":ordentrabajo.norden})|escape("js") }}", false);
+	    	xhttp.send();
+	    	data = JSON.parse(xhttp.responseText)
+	    	return data;
+		}
+		function setData(props)
+		{
+			switch(props)
+			{
+			case "tecnica": 
+				form.tecnica = true;
+			break;
+			case "error": 
+				form.error = true;
+			break;	
+			case "pnsn": 
+				form.pnsn = true;
+			break;	
+			case "tiquet": 
+				form.tiquet = true;
+			break;	
+			}
+
+			console.log(form);
+
+			if(form.tecnica && form.error && form.pnsn && form.tiquet)
+				{
+					console.log("form filled");
+				}else
+					{
+					console.log("not filled already");
+					}
+			
+		}
+        // init,configure dropzone
+        Dropzone.autoDiscover = false;
+
+        
+        var dropzone_default = new Dropzone("#imagen_detalles", {
+            url: '{{ path('fileuploadhandler',{"type":"pnsn"}) }}' ,
+            maxFiles: 5,
+            dictDefaultMessage: 'Clica o arrastra las los archivos para adjuntarlos',
+            dictMaxFilesExceeded: 'Solo se pueden enviar 5 Imagenes',
+            acceptedFiles: 'image/*,application/pdf',
+            maxFilesize: 5,  // in Mb
+            addRemoveLinks: true,
+            init: function () {
+                this.on("maxfilesexceeded", function(file) {
+                    this.removeFile(file);
+                });
+                this.on("sending", function(file, xhr, formData) {
+                    // send additional data with the file as POST data if needed.
+                    formData.append("N_ORDEN", "{{ordentrabajo.norden}}");
+                    formData.append("SERIE", "{{ordentrabajo.serie.nombre}}");  
+                });
+                this.on("success", function(file, response) {
+                    if (response.uploaded) 
+                        alert('File Uploaded: ' + response.fileName);
+                });
+                this.on('complete', () => {
+					setData("pnsn");
+                })
+            }
+        });
+
+        {% if ordentrabajo.tipo.id == 5 %}
+        var dropzone_default = new Dropzone("#imagen_HojaTecnica", {
+            url: '{{ path('fileuploadhandler',{"type":"hojatecnica"}) }}' ,
+            maxFiles: 5,
+            dictDefaultMessage: 'Clica o arrastra los archivos para adjuntarlos',
+            dictMaxFilesExceeded: 'Solo se pueden enviar 5 Imagenes',
+            acceptedFiles: 'image/*,application/pdf',
+            maxFilesize: 5,  // in Mb
+            addRemoveLinks: true,
+            init: function () {
+                this.on("maxfilesexceeded", function(file) {
+                    this.removeFile(file);
+                });
+                this.on("sending", function(file, xhr, formData) {
+                    // send additional data with the file as POST data if needed.
+                    formData.append("N_ORDEN", "{{ordentrabajo.norden}}");
+                    formData.append("SERIE", "{{ordentrabajo.serie.nombre}}");  
+                });
+                this.on("success", function(file, response) {
+                    if (response.uploaded) 
+                        alert('File Uploaded: ' + response.fileName);
+                });
+                this.on('complete', () => {
+						setData("tecnica");
+                    })
+            }
+        });
+        var dropzone_default = new Dropzone("#imagen_tiquet", {
+            url: '{{ path('fileuploadhandler',{"type":"tiquet"}) }}' ,
+            maxFiles: 5,
+            dictDefaultMessage: 'Clica o arrastra los archivos para adjuntarlos',
+            dictMaxFilesExceeded: 'Solo se pueden enviar 5 Imagenes',
+            acceptedFiles: 'image/*,application/pdf',
+            maxFilesize: 5,  // in Mb
+            addRemoveLinks: true,
+            init: function () {
+                this.on("maxfilesexceeded", function(file) {
+                    this.removeFile(file);
+                });
+                this.on("sending", function(file, xhr, formData) {
+                    // send additional data with the file as POST data if needed.
+                    formData.append("N_ORDEN", "{{ordentrabajo.norden}}");
+                    formData.append("SERIE", "{{ordentrabajo.serie.nombre}}");  
+                });
+                this.on("success", function(file, response) {
+                    if (response.uploaded) 
+                        alert('File Uploaded: ' + response.fileName);
+                });
+                this.on('complete', () => {
+					setData("tiquet");
+                })
+            }
+        });
+        var dropzone_default = new Dropzone("#imagen_errorHP", {
+            url: '{{ path('fileuploadhandler',{"type":"error"}) }}' ,
+            maxFiles: 5,
+            dictDefaultMessage: 'Clica o arrastra los archivos para adjuntarlos',
+            dictMaxFilesExceeded: 'Solo se pueden enviar 5 Imagenes',
+            acceptedFiles: 'image/*,application/pdf',
+            maxFilesize: 5,  // in Mb
+            addRemoveLinks: true,
+            init: function () {
+                this.on("maxfilesexceeded", function(file) {
+                    this.removeFile(file);
+                });
+                this.on("sending", function(file, xhr, formData) {
+                    // send additional data with the file as POST data if needed.
+                    formData.append("N_ORDEN", "{{ordentrabajo.norden}}");
+                    formData.append("SERIE", "{{ordentrabajo.serie.nombre}}");  
+                });
+                this.on("success", function(file, response) {
+                    if (response.uploaded) 
+                        alert('File Uploaded: ' + response.fileName);
+                });
+                this.on('complete', () => {
+					setData("error");
+                })
+            }
+        });
+        {% endif %}
+
+        function handleOnClick()
+        {
+            
+        	const container  = document.getElementById("modal");
+        	const data = document.getElementById("modal_data");
+        	container.style.display = "flex";
+        	list = getData();
+        	console.log(list);
+        	if(!list.nodata)
+        	{
+        		var missing = "";
+            	if({{ ordentrabajo.tipo.id }} == 5)
+            	{
+					
+            		if(!list.hojatecnica)
+    				{
+    					missing += "<li>Hoja Tecnica HP</li>";
+    				}
+        			if(!list.error)
+        			{
+        				missing += "<li>Página error HP</li>";
+        			}
+        			if(!list.tiquet)
+        			{
+        				missing += "<li>Tiquet Compra</li>";
+        			}
+        			if(!list.pnsn)
+        			{
+        				missing += "<li>Product number y/o Serial Number</li>";
+        			}
+            	}
+            	else
+            	{
+            		if(!list.pnsn)
+        			{
+        				missing += "<li>Product number y/o Serial Number</li>";
+        			}
+            	}
+    			if(missing === "")
+    			{
+    				document.getElementById("modal__title").innerHTML = "Todos los adjuntos necesarios están guardados";
+    			}else
+    			{
+    				document.getElementById("modal__title").innerHTML = "Faltan por enviar los siguientes adjuntos";
+    			}
+    			data.innerHTML = missing;
+        	}else
+        	{
+    			document.getElementById("modal__title").innerHTML = "Faltan por enviar todos los adjuntos a la orden"+" "+list.nodata;
+        	}
+        	
+			
+        }
+
+        function handleClose()
+        {
+        	document.getElementById("modal").style.display = "none";
+        	document.getElementById("modal_data").innerHTML("");
+            }
+    </script>
+{% endblock %}

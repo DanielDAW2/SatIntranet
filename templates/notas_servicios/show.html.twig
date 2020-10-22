@@ -1,0 +1,30 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}NotasServicios{% endblock %}
+
+{% block content %}
+    <h1>NotasServicios</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ notas_servicio.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ notas_servicio.fecha ? notas_servicio.fecha|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nota</th>
+                <td>{{ notas_servicio.Nota }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('notas_servicios_index') }}">back to list</a>
+
+    <a href="{{ path('notas_servicios_edit', {'id': notas_servicio.id}) }}">edit</a>
+
+    {{ include('notas_servicios/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,24 @@
+.modal
+{
+	display:none;
+	position:fixed;
+	background-color: rgba(0,0,0,0.5);
+	height: 100vh;
+	width: 100vw;
+	justify-content:center;
+	align-items:center;	
+}
+.modal_container
+{
+	display:flex;
+	background-color: white;
+	flex-direction: column;
+}
+.modal_close
+{
+	background-color: ghost;
+	font-size: 20px;
+	align-self:flex-end;
+	width: 40px;
+	height: 40px;
+}

@@ -1,0 +1,14 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Nuevo caso{% endblock %}
+
+{% block content %}
+    <div class="row mb-4">
+    	<div class="col">
+    		<h2>Nueva Reparación</h2>
+        	<a class="btn btn-primary" href="{{ path("ordentrabajo_new",{"tipo":"presupuesto"}) }}"><strong>Presupuesto</strong></a>
+    		 o <a class="btn btn-success" href="{{ path("ordentrabajo_new",{"tipo":"wty"}) }}"><strong>Garantía</strong></a>
+    	</div>
+    	
+    </div>
+{% endblock %}

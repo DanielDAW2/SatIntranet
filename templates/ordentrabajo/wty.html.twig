@@ -1,0 +1,22 @@
+{% extends 'ordentrabajo/edit.html.twig' %}
+
+{% block title %}Nueva Garantía{% endblock %}
+
+{% block content %}
+    <div class="row mb-4">
+        <div class="d-flex col align-items-baseline">
+        {% block ordentrabajo_tipo %}
+             <h1 class="pull-left">Nueva Garantía </h1>
+            <button class="ml-5 btn btn-danger">Adjuntar tiquet</button> 
+            <button class="ml-1 btn btn-success">Cerrar Caso</button> 
+        {% endblock %}
+        </div>     
+    </div>
+
+    {{ include('ordentrabajo/_wty_form.html.twig') }}
+    
+{% endblock %}
+
+
+
+

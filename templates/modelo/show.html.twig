@@ -1,0 +1,26 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Modelo{% endblock %}
+
+{% block content %}
+    <h1>Modelo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ modelo.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ modelo.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('modelo_index') }}">back to list</a>
+
+    <a href="{{ path('modelo_edit', {'id': modelo.id}) }}">edit</a>
+
+    {{ include('modelo/_delete_form.html.twig') }}
+{% endblock %}

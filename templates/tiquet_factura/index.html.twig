@@ -1,0 +1,37 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}TiquetFactura index{% endblock %}
+
+{% block content %}
+    <h1>TiquetFactura index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Fecha</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tiquet_factura in tiquet_facturas %}
+            <tr>
+                <td>{{ tiquet_factura.id }}</td>
+                <td>{{ tiquet_factura.numero }}</td>
+                <td>{{ tiquet_factura.fecha ? tiquet_factura.fecha|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('tiquet_factura_show', {'id': tiquet_factura.id}) }}">show</a>
+                    <a href="{{ path('tiquet_factura_edit', {'id': tiquet_factura.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('tiquet_factura_new') }}">Create new</a>
+{% endblock %}

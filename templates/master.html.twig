@@ -1,0 +1,221 @@
+{% extends 'base.html.twig' %}
+
+{% block nav %}
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{path("ordentrabajo_index")}}">Bienvenido {{app.user.nombre}} {{app.user.apellidos}}</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+				{% if is_granted("ROLE_CENTRAL") %}
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-envelope fa-2x"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    
+                    <!-- /.dropdown-messages -->
+                    <ul class="dropdown-menu dropdown-messages">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-wrench fa-fw"></i> En desarrollo
+                                    <span class="pull-right text-muted small"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                    </ul>
+                </li>
+                    <!-- Dropdrown Configuration -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-cog fa-2x"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    
+                    <!-- /.dropdown-config -->
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ path("tipos_servicios_index") }}">
+                                <div><i class="fa fa-bars fa-fw"></i> Servicios</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("usuario_index") }}">
+                                <div><i class="fa fa-users fa-fw"></i> Usuarios</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("delegacion_index") }}">
+                                <div><i class="fa fa-building fa-fw"></i> Delegaciones</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("situacion_index") }}">
+                                <div><i class="fa fa-wrench fa-fw"></i> Situaciones de las reparaciones</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("tiquet_factura_index") }}">
+                                <div><i class="fa fa-wrench fa-fw"></i> Tiquets Factura</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("serie_index") }}">
+                                <div><i class="fa fa-wrench fa-fw"></i> Series Reparaciones</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("tipo_index") }}">
+                                <div><i class="fa fa-wrench fa-fw"></i> Tipos Reparaciones</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("marca_index") }}">
+                                <div><i class="fa fa-wrench fa-fw"></i> Marcas</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("modelo_index") }}">
+                                <div><i class="fa fa-wrench fa-fw"></i> Modelos</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("part_number_index") }}">
+                                <div><i class="fa fa-wrench fa-fw"></i> Product Numbers</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("equipo_index")  }}">
+                                <div><i class="fa fa-wrench fa-fw"></i> Equipos</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("manual_index") }}">
+                                <div><i class="fa fa-wrench fa-fw"></i> Manuales de Ayuda</div>
+                            </a>
+                        </li>
+                        <li>
+	 						<a aria-expanded="false" href="{{ path("tipo_equipo_index")  }}" class=""><i class="fa fa-tools fa-fw"></i> Tipos Equipo</a>
+						</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-2x"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-wrench fa-fw"></i> En desarrollo
+                                    <span class="pull-right text-muted small"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+				{% endif %}
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-2x"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="{{path("usuario_show",{"id":app.user.id})}}"><i class="fa fa-user fa-fw"></i> Mi Perfil</a>
+                        </li>
+                        <li><a href="{{path("usuario_edit",{"id":app.user.id})}}"><i class="fa fa-gear fa-fw"></i> Editar Perfil</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="{{path("app_logout")}}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <form class="input-group custom-search-form" action="{{path("findOt")}}">
+                                <input name="caso" type="text" class="form-control" placeholder="Buscar...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                </span>
+                            </form>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Reparaciones<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapsed" style="height: 0px;">
+                                <li>
+                                	 <a aria-expanded="false" href="{{ path("ordentrabajo_index")  }}" class=""><i class="fa fa-tools fa-fw"></i> Ver Reparaciones en curso</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Servicios<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level"  style="height: 0px;">
+                                {{ render(controller("App\\Controller\\Admin\\TiposServiciosController::getServices")) }}
+                                <li>
+                                	 <a aria-expanded="false" href="{{ path("servicios_index_all") }}">Ver Todos</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        {% if is_granted("ROLE_TECNIC") %}
+                        <li>
+                            <a href="#"><i class="fa fa-info-circle fa-lg"></i> Manuales<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" style="height: 0px;">
+                                {{ render(controller("App\\Controller\\Admin\\ManualController::getManuales")) }}
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        {% endif %}
+                        
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+{% endblock %}
+{% block body %}
+    <div id="page-wrapper" style="min-height: 615px;">
+        <div class="row">
+            <h1>Intranet de {{app.user.delegacion.nombre}} </h1>
+        </div>
+            {% block content %}
+				
+            {% endblock %}
+             
+    </div><!-- /#page-wrapper -->
+	<div id="modal" class="modal shadow"> 	
+    	{% block modal_portal %}
+    	
+    	{% endblock %}
+    </div>
+{% endblock %}
+    
+
+{% block javascripts %}
+     {{parent()}}
+
+{% endblock %}

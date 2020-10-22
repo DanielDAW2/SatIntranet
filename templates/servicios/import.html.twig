@@ -1,0 +1,16 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Edit Servicios{% endblock %}
+
+{% block content %}
+    <h1>Importar Servicios</h1>
+	{% for flash_message in app.session.flashbag.get('notice') %}
+        <div class="">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {{ include('servicios/__import.html.twig', {'button_label': 'Importar Codigos'}) }}
+
+    <a href="{{ path('servicios_index') }}">Volver a la lista</a>
+
+{% endblock %}

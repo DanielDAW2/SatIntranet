@@ -1,0 +1,30 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Serie{% endblock %}
+
+{% block content %}
+    <h1>Serie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ serie.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ serie.nombre }}</td>
+            </tr>
+            <tr>
+                <th>IdTr</th>
+                <td>{{ serie.idTr }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('serie_index') }}">back to list</a>
+
+    <a href="{{ path('serie_edit', {'id': serie.id}) }}">edit</a>
+
+    {{ include('serie/_delete_form.html.twig') }}
+{% endblock %}

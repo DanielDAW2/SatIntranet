@@ -1,0 +1,248 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Editar Ordentrabajo{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+  	<link href="{{ asset("assets/css/jquery-editable.css") }}" type="text/css" rel="stylesheet"  />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="{{ asset('assets/css/modal.css') }}">
+	<style>
+	.select2-container{
+		width: 100% !important;
+	}
+	.modal_container{
+		display: none;
+	}
+	</style>
+	
+
+{% endblock %}
+{% block content %}
+    <div class="row mb-4">
+        <div class="d-flex col align-items-baseline">
+            <h3>{{ ordentrabajo.tipo.nombre }}: {{ordentrabajo.norden}} / {{ordentrabajo.ncaso}}</h3>
+                {% if ordentrabajo.norden %}<a href="{{path("ordentrabajo_images",{"n_orden":ordentrabajo.norden})}}" class="ml-3 btn mr-3 btn-warning">Enviar Imagenes</a>{% else %}<a href="#" class="btn btn-warning">Guarda para enviar imagenes</a>{% endif %}
+			{% if ordentrabajo.tipo.id == 6 %}
+			{% if budget is not same as(false) %}  
+                            <a href="{{path("ordentrabajo_budget",{"n_orden":ordentrabajo.norden})}}" class="btn btn-primary mr-3">Ver presupuesto</a>
+                        {% else %}
+                            <button class="mr-3 btn border border-primary">Esperando presupuesto</button>
+                        {% endif %}
+                {% if ordentrabajo.PresupuestoAceptado %}
+
+                    {% if ordentrabajo.situacion.id == 55 or ordentrabajo.situacion.id == 26  %}
+    					<button onClick="handleOnClick()" class="mr-3 btn btn-success">Cerrar Caso</button>
+                    {% endif %}
+                    {% if ordentrabajo.situacion.id == 27 or ordentrabajo.situacion.id == 46  %}
+    					<button class="ml-3 btn btn-success">Reparación Cerrada</button>
+                    {% endif %}
+                {% else %}
+                    {% if ordentrabajo.PresupuestoAceptado is same as(false) %}
+                    	<button class="btn btn-danger">PRESUPUESTO RECHAZADO</button>
+                    {% else %}
+                    <button onclick="aceptarPr()"  class="btn btn-success mr-3">ACEPTAR Presupuesto</button>
+					<button onclick="rechazarPr()"  class="btn btn-danger mr-3">RECHAZAR Presupuesto</button>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if ordentrabajo.tipo.id == 5 %}
+                {% if ordentrabajo.situacion.id == 54 %}
+                <button onclick="rechazarPr()" class=" ml-3 btn btn-success mr-3">Finalizar Reparacion</button>
+                {% endif %}
+            {% endif %}
+            <a class="btn btn-secondary" href="{{ path("cierre_reparaciones_orden",{"n_orden":ordentrabajo.norden}) }}">Ver Cambios</a>
+        </div>
+    </div>
+
+    {{ include('ordentrabajo/_form.html.twig', {'button_label': 'Update'}) }}
+{{ form_end(form) }}
+
+{% endblock %}
+{% block modal_portal %}
+     <div class="modal_container" id="Reparacion_Cierre">
+ 		<button onclick="handleClose()" class="btn modal_close px-4">X</button>
+     	<div class="p-4 row">
+     		<div class="col">
+     		<h3 id="modal__title">Añade el tiquet de cierre de reparacion para continuar:</h3>
+     		<form id="Tiquet_factura__form">
+     			<div class="row mb-3">
+     				<div class="col">
+             			<label for="inputAddress">Nº Tiquet</label>
+                        <input maxlength="4" size="4" name="tiquet" type="text" class="form-control"  required placeholder="Número de tiquet">
+         			</div>
+         			<div class="col">
+             			<label for="inputAddress">Fecha Tiquet ("dia/mes/año")</label>
+                        <input name="fechatiquet" type="text" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{2,4}" class="form-control" required placeholder="Fecha de tiquet DD/MM/YY">
+         			</div>
+     			</div>
+     			<div class="row mb-4">
+					<div class="col">
+						<label for="">Comentario</label>
+						<input class="form-control" type="text" name="comment" />
+					</div>
+				</div>
+     			<input name="user" required type="hidden" value="{{ app.user.id }}" />
+     			<input name="orden" type="hidden" value="{{ ordentrabajo.norden }}" />
+	     		<a onClick="handleClose()" class="btn btn-warning">Volver a la orden</a> <button type="submit" class="btn btn-success">Cerrar Caso</button>
+     			
+     		</form>
+     		</div>
+     	</div>
+     </div>
+     <div class="modal_container" id="Reparacion_aceptar_pr">
+ 		<button onclick="handleClose()" class="btn modal_close px-4">X</button>
+     	<div class="p-4 row">
+     		<div class="col">
+     		<h3 id="modal__title">¿Quieres añadir algun comentario?</h3>
+     		<form class="form_modal">
+     			<div class="row mb-4">
+					<div class="col">
+						<label for="">Comentario</label>
+						<input class="form-control" type="text" name="comment" />
+					</div>
+				</div>
+				<input name="type" required type="hidden" value="2" />
+     			<input name="user" required type="hidden" value="{{ app.user.id }}" />
+     			<input name="orden" type="hidden" value="{{ ordentrabajo.norden }}" />
+	     		<a onClick="handleClose()" class="btn btn-warning">Volver a la orden</a> <button type="submit" class="btn btn-success">Continuar</button>
+     			
+     		</form>
+     		</div>
+     	</div>
+     </div>
+     <div class="modal_container" id="Reparacion_rechazar_pr">
+ 		<button onclick="handleClose()" class="btn modal_close px-4">X</button>
+     	<div class="p-4 row">
+     		<div class="col">
+     		<h3 id="modal__title">¿Quieres añadir algún comentario?</h3>
+     		<form class="form_modal">
+     			<div class="row mb-4">
+					<div class="col">
+						<label for="">Comentario</label>
+						<input class="form-control" type="text" name="comment" />
+					</div>
+				</div>
+				<input name="type" required type="hidden" value="0" />
+     			<input name="user" required type="hidden" value="{{ app.user.id }}" />
+     			<input name="orden" type="hidden" value="{{ ordentrabajo.norden }}" />
+	     		<a onClick="handleClose()" class="btn btn-warning">Volver a la orden</a> <button type="submit" class="btn btn-success">Continuar</button>
+     			
+     		</form>
+     		</div>
+     	</div>
+     </div>
+     <div class="modal_container" id="Reparacion_wty_fin">
+ 		<button onclick="handleClose()" class="btn modal_close px-4">X</button>
+     	<div class="p-4 row">
+     		<div class="col">
+     		<h3 id="modal__title">¿Quieres añadir algun comentario?</h3>
+     		<form class="form_modal">
+     			<div class="row mb-4">
+					<div class="col">
+						<label for="">Comentario</label>
+						<input class="form-control" type="text" name="comment" />
+					</div>
+				</div>
+				<input name="type" required type="hidden" value="3" />
+     			<input name="user" required type="hidden" value="{{ app.user.id }}" />
+     			<input name="orden" type="hidden" value="{{ ordentrabajo.norden }}" />
+	     		<a onClick="handleClose()" class="btn btn-warning">Volver a la orden</a> <button type="submit" class="btn btn-success">Finalizar Reparacion</button>
+     			
+     		</form>
+     		</div>
+     	</div>
+     </div>
+     {% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+
+<script type="text/javascript">
+    document.getElementById("ordentrabajo_equipo_marca").required = true;
+    document.getElementById("ordentrabajo_equipo_Modelo").required = true;
+function handleClose()
+{
+	document.getElementById("modal").style.display = "none";
+}
+function handleOnClick()
+{
+	
+	document.getElementById("modal").style.display = "flex";
+	document.getElementById("Reparacion_rechazar_pr").style.display = "none";
+	document.getElementById("Reparacion_wty_fin").style.display = "none";
+	document.getElementById("Reparacion_aceptar_pr").style.display = "none";
+	document.getElementById("Reparacion_Cierre").style.display = "flex";
+	
+}
+
+function aceptarPr()
+{
+	document.getElementById("modal").style.display = "flex";
+	document.getElementById("Reparacion_Cierre").style.display = "none";
+	document.getElementById("Reparacion_rechazar_pr").style.display = "none";
+	document.getElementById("Reparacion_wty_fin").style.display = "none";
+	document.getElementById("Reparacion_aceptar_pr").style.display = "flex";
+	
+}
+function rechazarPr()
+{
+	document.getElementById("modal").style.display = "flex";
+	document.getElementById("Reparacion_wty_fin").style.display = "none";
+	document.getElementById("Reparacion_Cierre").style.display = "none";
+	document.getElementById("Reparacion_aceptar_pr").style.display = "none";
+	document.getElementById("Reparacion_rechazar_pr").style.display = "flex";
+	}
+function finReparacion()
+{
+	document.getElementById("modal").style.display = "flex";
+	document.getElementById("Reparacion_Cierre").style.display = "none";
+	document.getElementById("Reparacion_aceptar_pr").style.display = "none";
+	document.getElementById("Reparacion_rechazar_pr").style.display = "none";
+	document.getElementById("Reparacion_wty_fin").style.display = "flex";
+
+	}
+
+$("#Tiquet_factura__form").submit(function(event)
+{
+    data = $(this).serialize();
+    $.ajax({
+		url: "{{ path("tiquet_factura_generate")|escape("js") }}",
+		type: 'POST',
+		data: data,
+		success: function(response)
+			{
+				console.log(response);
+			},
+		complete: function(response)
+		{
+			location.reload();
+			}
+        })
+        
+    return false;
+})
+$(".form_modal").submit(function(event)
+{
+    data = $(this).serialize();
+    $.ajax({
+		url: "{{ path("cierre_reparaciones_generate")|escape("js") }}",
+		type: 'POST',
+		data: data,
+		success: function(response)
+			{
+				console.log(response);
+			},
+		complete: function(response)
+		{
+			location.reload();
+			}
+        })
+        
+    return false;
+})
+   
+
+
+
+</script>
+{% endblock %}

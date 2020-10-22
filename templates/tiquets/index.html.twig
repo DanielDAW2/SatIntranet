@@ -1,0 +1,40 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Tiquets index{% endblock %}
+
+{% block content %}
+    <h1>Tiquets index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Numero</th>
+                <th>Fecha</th>
+                <th>Orden asociada</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tiquet in tiquets %}
+            <tr>
+                <td>{{ tiquet.id }}</td>
+                <td>{{ tiquet.numero }}</td>
+                
+                <td>{{ tiquet.fecha ? tiquet.fecha|date('Y-m-d') : '' }}</td>
+                <td>{{ tiquet.ordentrabajo.norden }} / {{ tiquet.ordentrabajo.ncaso }}</td>
+                <td>
+                    <a href="{{ path('tiquets_show', {'id': tiquet.id}) }}">show</a>
+                    <a href="{{ path('tiquets_edit', {'id': tiquet.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('tiquets_new') }}">Create new</a>
+{% endblock %}

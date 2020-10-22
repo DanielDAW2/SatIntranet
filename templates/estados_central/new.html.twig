@@ -1,0 +1,11 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}New EstadosCentral{% endblock %}
+
+{% block content %}
+    <h1>Create new EstadosCentral</h1>
+
+    {{ include('estados_central/_form.html.twig') }}
+
+    <a href="{{ path('estados_central_index') }}">back to list</a>
+{% endblock %}

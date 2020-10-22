@@ -1,0 +1,38 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}Equipo index{% endblock %}
+
+{% block content %}
+    <h1>Equipo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+            	<th>Nº Serie</th>
+            	<th>Marca / Modelo</th>
+            	<th>Part Number</th>
+                <th>FechaCompraEquipo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for equipo in equipos %}
+            <tr>
+           	 	<td>{{ equipo.nSerie }}</td>
+           	 	<td>{% if equipo.Marca %} {{ equipo.Marca.nombre }} / {{ equipo.Modelo.nombre }} {% else %} Sin Marca Registrada {% endif %}</td>
+                <td> En desarrollo</td>
+                <td>{{ equipo.fechaCompraEquipo ? equipo.fechaCompraEquipo|date('d/m/Y') : '' }}</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="{{ path('equipo_edit', {'id': equipo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('equipo_new') }}">Create new</a>
+{% endblock %}
