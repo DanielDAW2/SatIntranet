@@ -141,8 +141,8 @@ class OrdentrabajoController extends AbstractController
         try
         {
             $file = $request->files->get('file');
-            $ftp = ftp_ssl_connect("213.98.134.69",5000);
-            ftp_login($ftp,"ORDER","#ORDERSATIMAGES2019#");
+            $ftp = ftp_ssl_connect("XXX",5000);
+            ftp_login($ftp,"","##");
             
         if(@ftp_chdir($ftp, $request->request->get("SERIE").$request->request->get("N_ORDEN")) ===   FALSE)
             {
@@ -175,8 +175,8 @@ class OrdentrabajoController extends AbstractController
     {
         try
         {
-            $ftp = ftp_ssl_connect("213.98.134.69",5000);
-            ftp_login($ftp,"ORDER","#ORDERSATIMAGES2019#");
+            $ftp = ftp_ssl_connect("");
+            ftp_login($ftp,"","##");
             $list = [];
             if(ftp_chdir($ftp, $id->getSerie()->getNombre().$id->getNOrden()))
             {
@@ -309,10 +309,10 @@ class OrdentrabajoController extends AbstractController
     {
         $this->updateOT($ordentrabajo->getNOrden());
 
-        $ftp = ftp_ssl_connect("213.98.134.69",5000);
+        $ftp = ftp_ssl_connect("");
         
 
-        ftp_login($ftp,"PR","#PR22/01/2019#RT");
+        ftp_login($ftp,"",");
 
         $ftplist = ftp_nlist($ftp,"/");
         ftp_close($ftp);
@@ -338,10 +338,10 @@ class OrdentrabajoController extends AbstractController
     */
     public function getOrderBudget(Ordentrabajo $ordentrabajo)
     {
-        $ftp = ftp_ssl_connect("213.98.134.69",5000);
+        $ftp = ftp_ssl_connect("");
 
 
-        ftp_login($ftp,"PR","#PR22/01/2019#RT");
+        ftp_login($ftp,"","");
 
         $file = ftp_get($ftp,$this->getParameter("pdf")."/".$ordentrabajo->getNPresupuesto().".pdf","PRESUPUESTOS_TF_".$ordentrabajo->getNPresupuesto().".pdf",FTP_BINARY);
         ftp_close($ftp);
@@ -359,7 +359,7 @@ class OrdentrabajoController extends AbstractController
         $this->updateOT($ordentrabajo->getNOrden());
         $form = $this->createForm(OrdentrabajoType::class, $ordentrabajo, array('user'=>$this->getUser()));
         $form->handleRequest($request);
-        $ftp = ftp_ssl_connect("213.98.134.69",5000);
+        $ftp = ftp_ssl_connect("");
         
         
         ftp_login($ftp,"PR","#PR22/01/2019#RT");
