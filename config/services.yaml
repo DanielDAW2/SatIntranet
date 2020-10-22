@@ -7,7 +7,7 @@ parameters:
     pdf: '%kernel.project_dir%/public/uploads/pdf'
     elifedir: '%kernel.project_dir%/public/uploads/Elife'
     csvusers: '%kernel.project_dir%/src/CSV/users'
-    srv: "http://213.98.134.69/"
+    srv: "http://XXX.XXX.XXX.XXX/"
     locale: 'en'
 
 services:
